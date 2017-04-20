@@ -1,5 +1,38 @@
 import React from 'react'
+import thinking from '../svg/thinking.svg'
+import coil from '../svg/coil.svg'
+const square = n => {
+  switch(n){
+    case 'tl':
+      return (
+        <div style={{textAlign: 'left', paddingLeft: 10}}>
+          <img src={ thinking } width={24} height={24} alt='none'/>
+          <span>
 
+          </span>
+        </div>
+      )
+    case 'tr':
+      return (
+        <div style={{
+          textAlign: 'left',
+          paddingLeft: 5,
+          paddingTop: 3,
+          display: 'block',
+
+        }}>
+          <div style={{float: 'left'}}>
+          <img src={ coil } width={22} height={22} alt='none'/>
+          </div>
+          <div style={{textAlign: 'center'}}>
+          <span>
+            1,000,000.00
+          </span>
+          </div>
+        </div>
+      )
+  }
+}
 export default props => (
   <div
     style={{
@@ -24,17 +57,21 @@ export default props => (
       overflow: 'hidden',
       opacity: props.opacity,
       color: props.colorLabel,
-
+      fontSize: props.fontSize,
+      fontWeight: props.fontWeight,
     }}
     >
     <span style={{
-      fontSize: 12,
+      fontSize: 14,
       textTransform: 'upperCase',
       textShadow: '1px 1px 1px rgba(0,0,0, 0.2)',
-      lineHeight: '30px',
-      color: '#333'
+      lineHeight: '24px',
+      colorLabel: props.colorLabel,
+      fontFamily: props.font,
+      fontWeight: 'bold',
+      letterSpacing: props.spacing,
     }}>
-      {props.label}
+      {square(props.name, props.value)}
     </span>
   </div>
 )

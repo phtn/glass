@@ -9,6 +9,8 @@ import React, { Component } from 'react'
 // }
 // eslint-disable-next-line
 import { Motion, spring, presets } from 'react-motion'
+import toast from 'pre-toast/lib/Toast'
+import mojs from 'mo-js'
 
 import MOUSE from './components/sandbox'
 import SQUARE from './components/square'
@@ -21,19 +23,36 @@ const div = {
 }
 const width = window.innerWidth
 const height = window.innerHeight
+let config = {
+  position: 'bottom-right',
+  maxVisible: 1,
+  timeBar: false
+}
+toast.configuration(config)
+
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
       mouseX: 0,
       mouseY: 0,
-      tlWidth: 0.
-
+      tlWidth: 0,
+      energy: 1000000000,
     }
   }
   componentDidMount(){
-
     this.setState({tlWidth: width/2})
+    setTimeout(t=> toast.success('1 Million MW', 'Gift from the Sun'), 1000)
+    const burst = new mojs.Burst({
+      radius: {0:100},
+      children: {
+        shape: 'polygon',
+        radius: {0:20}
+      },
+      duration: 3000,
+    })
+    // eslint-disable-next-line
+    const timeline = new mojs.Timeline().add(burst).play()
   }
   getMouseLocation(e){
     this.setState({mouseX: e.clientX})
@@ -48,28 +67,33 @@ class App extends Component {
         onMouseDown={(e)=>console.log('test')}>
 
         <Motion /* TOP - LEFT */
-          defaultStyle={{w: 0, h: height}}
+          defaultStyle={{w: 0, h: 25, s: -2}}
           style={{
-            w: spring(width-50),
-            h: spring(25),
+            w: spring(width-150),
+            h: spring(24),
+            s: spring(2)
           }}
           >
           {i=>
             <SQUARE
+            name={'tl'}
             title={i.w}
             width={i.w}
             height={i.h}
-            color={'#222'}
+            color={'transparent'}
             left={0}
             alignItems='center'
             borderTop={0}
-            borderBottom={2}
+            borderBottom={0}
             borderLeft={0}
             borderRight={0}
             opacity={1}
             colorLabel={'#ccc'}
-            label={'tsla'}
-            bgColor={'#ccc'}
+            label={''}
+            bgColor={'#999'}
+            font={'Roboto'}
+            fontWeight={100}
+            spacing={i.s}
             />
           }
         </Motion>
@@ -92,6 +116,7 @@ class App extends Component {
           >
           {i=>
             <SQUARE
+            name={'tr'}
             title={i.w}
             width={i.w}
             height={i.h}
@@ -107,8 +132,10 @@ class App extends Component {
             borderRadiusTopLeft={0}
             borderRadiusTopRight={0}
             opacity={i.o}
-            label={'$ 1,000,000'}
-            bgColor={'#999'}
+            label={'$ 1,000,000.00'}
+            bgColor={'#2dde98'}
+            font={'Josefin Slab'}
+            fontSize={14}
             />
           }
         </Motion>
