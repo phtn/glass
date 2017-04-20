@@ -11,7 +11,7 @@ import React, { Component } from 'react'
 import { Motion, spring, presets } from 'react-motion'
 import toast from 'pre-toast/lib/Toast'
 import mojs from 'mo-js'
-
+import audio from 'react-audio'
 import MOUSE from './components/sandbox'
 import SQUARE from './components/square'
 const div = {
@@ -42,17 +42,62 @@ class App extends Component {
   }
   componentDidMount(){
     this.setState({tlWidth: width/2})
-    setTimeout(t=> toast.success('1 Million MW', 'Gift from the Sun'), 1000)
+    setTimeout(t=> toast.success('1 Million MW', 'Gift from the Sun'), 10000)
     const burst = new mojs.Burst({
-      radius: {0:100},
+      radius: {800:0},
+      count: 100,
+      angle: 45,
       children: {
-        shape: 'polygon',
-        radius: {0:20}
+        shape: 'circle',
+        fill: '#2dde98',
+        radius: {2:2},
+        delay: 'stagger(rand(200,350))',
       },
-      duration: 3000,
+
+      duration: 2000,
+    })
+    const burst1 = new mojs.Burst({
+      radius: {800:0},
+      count: 108,
+      angle: 45,
+      children: {
+        shape: 'circle',
+        fill: '#2dde98',
+        radius: {2:2},
+        delay: 'stagger(rand(200,350))',
+      },
+
+      duration: 2000,
+    })
+    const burst2 = new mojs.Burst({
+      radius: {800:0},
+      count: 36,
+      angle: 45,
+      children: {
+        shape: 'circle',
+        fill: '#eee',
+        radius: {2:2},
+        delay: 'stagger(rand(400,550))',
+      },
+
+      duration: 2000,
+    })
+    const burst3 = new mojs.Burst({
+      radius: {800:0},
+      count: 12,
+      angle: 45,
+      children: {
+        shape: 'circle',
+        fill: '#f47721',
+        radius: {2:2},
+        delay: 'stagger(rand(300,450))',
+      },
+
+      duration: 2000,
     })
     // eslint-disable-next-line
-    const timeline = new mojs.Timeline().add(burst).play()
+    const timeline = new mojs.Timeline({repeat: 99})
+      .add(burst,burst1,burst,burst,burst2,burst3,burst3).play()
   }
   getMouseLocation(e){
     this.setState({mouseX: e.clientX})
@@ -65,7 +110,7 @@ class App extends Component {
         style={{...div}}
         onMouseMove={this.getMouseLocation.bind(this)}
         onMouseDown={(e)=>console.log('test')}>
-
+        <audio source={'./audio/bg.mp3'} pause={false}/>
         <Motion /* TOP - LEFT */
           defaultStyle={{w: 0, h: 25, s: -2}}
           style={{
@@ -89,7 +134,7 @@ class App extends Component {
             borderRight={0}
             opacity={1}
             colorLabel={'#ccc'}
-            label={''}
+            label={this.state.energy}
             bgColor={'#999'}
             font={'Roboto'}
             fontWeight={100}
@@ -132,10 +177,11 @@ class App extends Component {
             borderRadiusTopLeft={0}
             borderRadiusTopRight={0}
             opacity={i.o}
-            label={'$ 1,000,000.00'}
+            label={this.state.energy}
             bgColor={'#2dde98'}
             font={'Josefin Slab'}
             fontSize={14}
+            click={this.click}
             />
           }
         </Motion>
@@ -198,6 +244,7 @@ class App extends Component {
           >
           {i=>
             <SQUARE
+            name={'bl'}
             top={i.t}
             title={i.w}
             width={i.w}

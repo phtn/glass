@@ -1,15 +1,19 @@
 import React from 'react'
 import thinking from '../svg/thinking.svg'
 import coil from '../svg/coil.svg'
-const square = n => {
+import panel from '../svg/solar-panel.svg'
+const styles = {
+  panels: {
+    opacity: 1
+  }
+}
+const square = (n,l) => {
   switch(n){
     case 'tl':
       return (
         <div style={{textAlign: 'left', paddingLeft: 10}}>
-          <img src={ thinking } width={24} height={24} alt='none'/>
-          <span>
+          <img style={{}} src={ thinking } width={24} height={24} alt='none'/>
 
-          </span>
         </div>
       )
     case 'tr':
@@ -26,12 +30,32 @@ const square = n => {
           </div>
           <div style={{textAlign: 'center'}}>
           <span>
-            1,000,000.00
+
           </span>
           </div>
         </div>
       )
+      case 'bl':
+        return (
+          <div style={{
+            textAlign: 'left',
+            paddingLeft: 5,
+            paddingTop: 3,
+            display: 'block',
+
+          }}>
+            <div style={{textAlign: 'center', paddingTop: 250}}>
+            <img src={ panel } width={100} height={100} alt='none'/>
+            </div>
+            <div style={{textAlign: 'center'}}>
+
+            </div>
+          </div>
+        )
   }
+}
+const label = (l) => {
+  return l
 }
 export default props => (
   <div
@@ -70,8 +94,12 @@ export default props => (
       fontFamily: props.font,
       fontWeight: 'bold',
       letterSpacing: props.spacing,
+      label: props.label
     }}>
-      {square(props.name, props.value)}
+      {square(props.name, props.label)}
+      <span>
+          {label(props.label)}
+      </span>
     </span>
   </div>
 )
