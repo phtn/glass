@@ -1,34 +1,20 @@
 import React, { Component } from 'react'
-//import colours from './colours.json'
-// const cArray = colours[0].colors
-// console.log(cArray.length)
-// const  getColors = c => {
-//   for ( let i=0; i<cArray.length; i++ ){
-//     console.log(c[i])
-//   }
-// }
+
 // eslint-disable-next-line
 import { Motion, spring, presets } from 'react-motion'
 import toast from 'pre-toast/lib/Toast'
 import mojs from 'mo-js'
-import audio from 'react-audio'
-import MOUSE from './components/sandbox'
+import Howl from 'howler'
 import SQUARE from './components/square'
+
+const width = window.innerWidth
+const height = window.innerHeight
 const div = {
-  // border: '1px solid gray',
-  height: window.innerHeight,
+  height: height-25,
   justtifyContent: 'space-around',
   alignItems: 'center',
   textAlign: 'center'
 }
-const width = window.innerWidth
-const height = window.innerHeight
-let config = {
-  position: 'bottom-right',
-  maxVisible: 1,
-  timeBar: false
-}
-toast.configuration(config)
 
 class App extends Component {
   constructor(props){
@@ -37,12 +23,13 @@ class App extends Component {
       mouseX: 0,
       mouseY: 0,
       tlWidth: 0,
-      energy: 1000000000,
+      energy: 0,
     }
   }
   componentDidMount(){
+    setInterval(i=> {this.setState({energy: this.state.energy + 1})}, 100)
     this.setState({tlWidth: width/2})
-    setTimeout(t=> toast.success('1 Million MW', 'Gift from the Sun'), 10000)
+
     const burst = new mojs.Burst({
       radius: {800:0},
       count: 100,
@@ -63,7 +50,7 @@ class App extends Component {
       children: {
         shape: 'circle',
         fill: '#2dde98',
-        radius: {2:2},
+        radius: {'rand(2-6)':2},
         delay: 'stagger(rand(200,350))',
       },
 
@@ -110,7 +97,7 @@ class App extends Component {
         style={{...div}}
         onMouseMove={this.getMouseLocation.bind(this)}
         onMouseDown={(e)=>console.log('test')}>
-        <audio source={'./audio/bg.mp3'} pause={false}/>
+
         <Motion /* TOP - LEFT */
           defaultStyle={{w: 0, h: 25, s: -2}}
           style={{

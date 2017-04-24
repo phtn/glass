@@ -1,5 +1,5 @@
 import React from 'react'
-import thinking from '../svg/thinking.svg'
+import sun from '../svg/sun.svg'
 import coil from '../svg/coil.svg'
 import panel from '../svg/solar-panel.svg'
 const styles = {
@@ -11,8 +11,8 @@ const square = (n,l) => {
   switch(n){
     case 'tl':
       return (
-        <div style={{textAlign: 'left', paddingLeft: 10}}>
-          <img style={{}} src={ thinking } width={24} height={24} alt='none'/>
+        <div style={{textAlign: 'left', padding: 0}}>
+          <img src={ sun } width={15} height={15} alt='none' style={{padding: '5px'}}/>
 
         </div>
       )
@@ -98,7 +98,7 @@ export default props => (
     }}>
       {square(props.name, props.label)}
       <span>
-          {label(props.label)}
+        {label(props.label)}
       </span>
     </span>
   </div>
