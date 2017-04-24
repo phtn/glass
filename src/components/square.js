@@ -2,6 +2,7 @@ import React from 'react'
 import sun from '../svg/sun.svg'
 import coil from '../svg/coil.svg'
 import panel from '../svg/solar-panel.svg'
+// SQUARE COMPONENT
 const styles = {
   panels: {
     opacity: 1
